@@ -1,7 +1,8 @@
 def verifica_fermat(a, b, c, n):
-    if a**n + b**n == c**n:
-        return True
-    return False
+    if n != 2 and ((a**n + b**n) == c**n):
+        return False
+
+    return True
 
 
 def testa_teorema(max_num, max_pot):
@@ -13,7 +14,7 @@ def testa_teorema(max_num, max_pot):
             for j in range(1, max_num + 1):
                 for k in range(1, max_num + 1):
                     if not verifica_fermat(i, j, k, n):
-                        print("Ho trovato un controesempio. ", i, j, k, n)
+                        print("Ho trovato un controesempio.")
                         return
         # Se non ho trovato un controesempio, che falsifica il teorema,
         # incremento n. Ripeto il test.
@@ -22,10 +23,7 @@ def testa_teorema(max_num, max_pot):
     print("non ho trovato controesempi")
    
         
-    
-
-
 testa_teorema(100, 3)
-testa_teorema(20, 5)
+testa_teorema(50, 5)
 
 
