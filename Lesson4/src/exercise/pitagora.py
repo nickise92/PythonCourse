@@ -5,11 +5,11 @@ def terna_corretta(a, b, c):
 def colleziona_terne(max_n):
     risultato = []
 
-    for i in range(2, max_n):
-        tmpstr = "("
-        if terna_corretta(i-1, i, i+1):
-            tmpstr += str(i-1) + "," + str(i) + "," + str(i+1) + ")"
-            risultato.append(tmpstr)
+    for i in range(1, max_n+1):
+        for j in range(2, max_n+1):
+            for k in range(3, max_n+1):
+                if terna_corretta(i, j, k):
+                    risultato.append((i, j, k))
 
     return risultato
 

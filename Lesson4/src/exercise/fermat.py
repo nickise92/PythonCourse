@@ -22,7 +22,7 @@ def testa_teorema(max_num, max_pot):
 
     print("non ho trovato controesempi")
    
-        
+
 testa_teorema(100, 3)
 testa_teorema(50, 5)
 
