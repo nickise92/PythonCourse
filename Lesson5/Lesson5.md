@@ -202,8 +202,129 @@ with open('example.txt', 'r') as f:
             l.append(int(line[:-1]))
 
 print(l)
+print(f.closed)
+```
+*Output:*
+```
+[10, -2, 0, 5]
+True
+```
+**Importante:** nel caso del `with`, anche se `l` viene dichiarata all'interno del blocco, non viene 'distrutta' ma 'sopravvive' ed è utilizzabile anche in seguito.
+
+## Exceptions 
+Gli errori che avvengono durante l'esecuzione del codice vengono chiamati **eccezioni**. <br>
+In molte situazioni, per esempio quando gestiamo gli input, non possiamo essere certi che tutti i dati che vengono letti siano al 100% corretti e coerenti con le nostre specifiche. Possiamo gestire esplicitamente questi errori con l'istruzione `try ... except`.
+
+Il codice prova ad eseguire le istruzioni presenti nel blocco `try`, se qualcosa fallisce, esegue il blocco `except`.
+*Esempio*:
+```Python
+with open('example.txt', 'r') as f:
+    l = []
+    for line in f:
+        try:
+            l.append(int(line[:-1]))
+        except:
+            print('impossibile convertire: "' + line + '"')
+
+print(l)
+```
+*È importante usare il* `try .. except` *in caso di lettura da file*.
+
+Esiste anche il ramo `finally`: quello che viene scritto in questo blocco viene **sempre** eseguito, è utile per chiudere eventuali file aperti nel caso non si stia utilizzando `with`.
+```Python
+# Esempio
+try:
+    f = open('example.txt', 'r')
+    # eseguo operazioni sul file
+except:
+    print("È stata generata un'eccezione")
+finally:
+    # In questo modo si ha la certezza che il file viene
+    # chiuso in ogni caso!
+    f.close()
+
+# ...
 ```
 
+### Sollevare un'eccezione
+Le eccezioni vengono generate (o sollevate, da *raise*) quando avviene un errore.
 
+È possibile creare manualmente delle eccezioni, usando l'istruzione `raise`. Per farlo, dobbiamo specificare il tipo di eccezione e il contenuto del messaggio.
+```Python
+raise ValueError('impossibile convertire')
+```
+```
+Traceback (most recent call last):
+  File "main.py", line 14, in <module>
+    raise ValueError('impossibile convertire')
+ValueError: impossibile convertire
+```
+Python include già molte [eccezioni](https://docs.python.org/3/library/exceptions.html)
 
+## Funzioni - parametri opzionali
+Abbiamo già visto come dichiarare una funzione che richiede dei parametri (detti *argomenti*). È possibile assegnare un valore di default ad un argomento, se la funzione viene chiamata senza assegnare niente usiamo il valore di default.
 
+**Attenzione:** i valori di default vengono valutati una sola volta, meglio evitare oggetti mutabili (come le liste). In questi casi, è buona norma mettere `None` come valore di default e inizializzare il valore in seguito.
+```Python
+def somma(lista, base = 0):
+    for i in lista:
+        base += 1
+    return base
+
+# Conta partendo da 0
+somma([10, 20, 30])
+# Conta partendo da 10
+somma([10, 20, 30], 10)
+```
+### Keyword arguments
+Quando chiamo una funzione, è possibile esplicitare direttamente i nomi degli argomenti. In questo caso, l'ordine non conta. È molto utile per interagire con funzioni di libreria che hanno molti parametri.
+
+*Esempio*:
+```Python
+def somma(lista, base = 0):
+    for i in lista:
+        base += i
+    return base
+
+# Passaggio esplicito degli argomenti
+somma(base=5, lista=[0, 1, 2, -2])
+```
+
+### Tipo del return
+In python, il tipo di una variabile non viene specificato, ma viene dedotto dal contesto. Lo stesso vale per il risultato di una funzione: finché la funzione non esegue, non possiamo sapere quale sarà il tipo del risultato.
+
+Il tipo di ritorno può essere eterogeneo, input diversi dello stesso tipo possono darmi risultati di tipo diverso (si pensi alla radice quadrata, che può restituire numeri reali o complessi).
+
+Questa è una feature che può generare più problemi che benfici, va usata con parsimonia. Un caso d'uso valido e comune è, però, quello di ritornare `None` se una funzione fallisce e non riesce a costruire un risultato. <br>
+*Esempio*:
+```Python
+def my_find(lista, valore):
+    # Se il find fallisce, ritorna None
+    try:
+        return lista.find(valore)
+    except AttributeError:
+        return None
+
+x = my_find([1, 2, 3, 4], 5)
+``` 
+### Duck typing
+Python predilige il *duck typing*. In particolare, non è buona pratica controllare esplicitamente i tipi, meglio usare gli argomenti come si desidera e gestire le eccezioni se le cose non vanno a buon fine.
+
+**Duck Typing:** <br>
+*If it looks like a duck, swims like a duck and quacks like a duck, then it is probably a duck!*
+
+### Annotazioni
+Indicare il tipo che una funzione si aspetta, tuttavia è molto importante. Questo spesso è parte della documentazione.
+
+Da Python 3.5, è possibile *annotare* argomenti e valore di ritorno di una funzione. Questo non modifica il codice in nessun modo, è solo un suggerimento, ma può essere molto utile per documentare il nostro codice. Inoltre tool esterni, come linter e IDE, possono sfruttare queste informazioni in maniera sistematica.
+
+*Esempio*:
+```Python
+from typing import List
+
+def somma(lista : List[int], base : int = 0) -> int:
+    for i in lista:
+        base += i
+    return base
+```
+A livello di sicurezza (del codice), fare controlli di tipo è una cattiva idea, ma ci sono alcuni casi in cui può avere senso lavorare con i tipi. 
