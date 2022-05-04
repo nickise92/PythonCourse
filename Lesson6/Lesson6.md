@@ -153,3 +153,13 @@ Il [cifrario di Cesare](https://en.wikipedia.org/wiki/Caesar_cipher) è un noto 
 Implementare le funzioni `cripta(test, chiave)` che cripta un testo usando il cifrario di Cesare, e la funzione `decripta(testo, chiave)` che fa l'operazione inversa. Assumete che le stringhe contengano solo caratteri (maiuscoli e minuscoli) e spazi. Gli spazi non devono essere cambiati, mentre i caratteri devono essere spostati (rispettando maiuscole e minuscole).
 
 In python, ogni carattere è identificato da un numero intero. Si può ottenere il numero corrispondente utilizzando la funzione `ord('a')`, che può essere utile per trasformare le lettere in numeri e implementare il cifrario. La funzione `chr(n)` fa l'operazione inversa, trasforma numeri in caratteri.
+
+### Esercizio 4: `Lesson6/src/ese4/main.py`
+
+Il file `experiment_data.csv` contiene i risultati di un esperimento. I dati sono raccolti in tre colonne, e i valori sono separati da virgole. Ogni riga rappresenta il risultato di un esperimento, fatta eccezione per la prima riga, che contiene il nome delle colonne (*misure, potenza, guadagno*). La prima colonna contiene numeri interi, mentre le altre due contengono numeri reali.
+
+Implementare una funzione `carica_esperimento(nome_file)` che riceve il nome di un file e ritorna tre liste, la prima conterrà tutti i valori della colonna *misure* (come interi), la seconda tutti i valori della colonna *potenza* (come float), la terza tutti i valori della colonna *guadagno* (come float).
+
+Scrivere poi una funzione `media(l)` e `mediana(l)` che ritornano rispettivamente la [media aritmetica](https://en.wikipedia.org/wiki/Mean) e la [mediana](https://en.wikipedia.org/wiki/Median) di una lista di numeri `l`, e usare queste funzioni per calcolare e stampare a schermo media e mediana di *potenza* e *guadagno*.
+
+Costruire poi due dizionari. Il primo mappa ogni possibile valore della colonna *misure* (un valore intero da 35 a 45) alla lista di valori di *potenza* associati a quel numero di misure effettuate. Il secondo crea un mapping simile, ma per i valori di *guadagno*. Calcolare infine la potenza media e il guadagno medio per ogni valore di misura.
