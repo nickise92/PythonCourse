@@ -1,32 +1,24 @@
 # Exercise 2 Lesson 6
 
 def invert_dict_multi(d):
-    inverse = {}
+    inverse = dict() 
     keysList = []
     itemsList = []
     new_val = []
 
-    for k in d:
-        keysList.append(k)
-    
-    for i in d:
-        itemsList.append(d[i])
+    for i in range(len(keysList)):
+        print(f'Key: {keysList[i]} || Value: {itemsList[i]}')
 
     for i in range(len(d)):
-        itemsListCpy = itemsList.copy()
-        itemsListCpy.pop(itemsListCpy.index(itemsList[i]))
-        if itemsList[i] not in itemsListCpy:
-            inverse.setdefault(itemsList[i], new_val.append(keysList[i]))
-            print(keysList[i])
+        if itemsList[i] in inverse:
+            inverse.setdefault(itemsList[i], inverse.get(itemsList[i]).append(keysList[i]))
         else:
-            inverse.setdefault(itemsList[i], new_val.append(keysList[i]))
+            inverse.setdefault(itemsList[i], [keysList[i]])
         
     return inverse
             
-
-
 def invert_dict(d):
-    inverse = {}
+    inverse = dict() 
     keysList = [] 
     itemsList = []
     for k in d:
