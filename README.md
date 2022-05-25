@@ -7,3 +7,4 @@
 5. Lesson 5: Dictionaries, Inputs, Exceptions, Functions, Duck Typing
 6. Lesson 6: String, Format, Some useful libraries (json, xml, csv), Exercises
 7. Lesson 7: Programmazione ad Oggetti: alcuni concetti, Feature avanzate, Librerie
+8. Lesson 8: Moduli, Ambienti vrituali (venv), NumPy (Numerical Python - libreria)

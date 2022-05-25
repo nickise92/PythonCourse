@@ -189,4 +189,383 @@ print(type(v), v.dtype, v.shape)
 [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
 <class 'numpy.ndarray'> float64 (10, )
 ```
+L'attributo *shape* definisce la "forma" dell'array (numero di righe, colonne ecc...).
 
+Nel caso bidimensionale, il primo parametro è il numero di righe, il secondo quello di colonne.
+
+Da notare che *shape* è sempre restituita come **tupla**.
+
+È possibile modificare la 'shape' con il metodo `reshape` (o con altri metodi specifici, <br>
+come T per la trasposta).
+
+*Esempio*:
+```Python
+v = np.zeros((2, 10))
+print(v)
+```
+*Output*:
+```
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+```
+```Python
+print(v.T)
+print(v.shape, v.T.shape)
+```
+*Output*:
+```
+[[0. 0.]
+ [0. 0.]
+ [0. 0.]
+ [0. 0.]
+ [0. 0.]
+ [0. 0.]
+ [0. 0.]
+ [0. 0.]
+ [0. 0.]
+ [0. 0.]]
+(2, 10) (10, 2)
+```
+```Python
+print(v.reshape((1, 20)))
+```
+*Output*:
+```
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+```
+
+**IMPORTANTE**: i metodi 'T' e 'reshape' non modificano in memoria il dato, ma lo leggono<br>
+in modo diverso, quindi il costo dell'operazione di trasposta, per esempio, e' ottimizzato.
+
+### Accesso
+
+In caso di array multidimensionali (matrici), possiamo accedere a un elemento **mettendo tutti gli 
+indici dentro alle parentesi quadre**.
+
+```Python
+a = np.arange(25).reshape((5, 5))
+print(a)
+print(a[0, 0]) # riga 0 colonna 0
+print(ap2, 3)) # riga 2 colonna 3
+```
+*Output*:
+```
+[[ 0  1  2  3  4]
+ [ 5  6  7  8  9]
+ [10 11 12 13 14]
+ [15 16 17 18 19]
+ [20 21 22 23 24]]
+0
+13
+```
+*È possibile anche passare liste di posizioni, questo crea un array compattato con i valori <br>
+desiderati*:
+```Python
+# non molto usato
+print(a[[0, 2], [0, 3]])
+```
+*Output*:
+```
+[ 0 13]
+```
+
+### Slice
+
+È possibile usare le stesse operazioni di slice (già viste per le liste) anche in un <br>
+array NumPy.
+
+**Attenzione:** NumPy ritorna delle "viste" degli stessi dati, non crea copie con `slice`. <br>
+Se si desidera creare una copia, bisogna utilizzare il metodo `copy()`.
+
+*Esempio: <br>
+Si vuole prendere dalla matrice `a` precedentemente dichiarata solo la prima riga e tutte le colonne*.
+```Python
+print(a)
+print(a[1:2, :])
+```
+*Output*:
+```
+[[ 0  1  2  3  4]
+ [ 5  6  7  8  9]
+ [10 11 12 13 14]
+ [15 16 17 18 19]
+ [20 21 22 23 24]]
+
+[[5 6 7 8 9]]
+```
+È possibile definire anche un 'passo', e con `-1` si inverte la riga/colonna:
+```Python
+# legge tutte le righe dalla fine all'inizio, e solo le prime 3 colonne (0, 1, 2).
+print(a[::-1, :3])
+```
+*Output*:
+```
+[[20 21 22]
+ [15 16 17]
+ [10 11 12]
+ [ 5  6  7 ]
+ [ 0  1  2 ]]
+```
+
+Esempio utilizzando un immagine, che è un'array di pixel, ovvero un array a 3 dimensioni.
+
+```Python
+import matplotlib.pyplot as plt
+plt.rcParams['figure.figsize'] = [10, 6]
+
+img = plt.imread('arena.png')
+plt.imshow(img)
+plt.show()
+print(type(img))
+```
+*Output*:
+![out.png](img/out.PNG)
+```
+<class 'numpy.ndarray'>
+```
+Ecco alcuni esempi di slicing:
+```Python
+import matplotlib.pyplot as plt
+plt.rcParams['figure.figsize'] = [10, 6]
+
+img = plt.imread('arena.png')
+plt.imshow(img[:500, :]) # sliced_1.png 
+plt.show()
+print(type(img))
+```
+![sliced_1](img/sliced_1.png)
+*sliced_1.png*
+```Python
+import matplotlib.pyplot as plt
+plt.rcParams['figure.figsize'] = [10, 6]
+
+img = plt.imread('arena.png')
+plt.imshow(img[:, :500]) # sliced_2.png
+plt.show()
+print(type(img))
+```
+![sliced_2](img/sliced_2.png)
+*sliced_2.png*
+```Python
+import matplotlib.pyplot as plt
+plt.rcParams['figure.figsize'] = [10, 6]
+
+img = plt.imread('arena.png')
+plt.imshow(img[::3, :]) # compressed_1.png
+plt.show()
+print(type(img))
+```
+![compressed_1](img/compressed_1.png)
+*compressed_1.png*
+```Python
+import matplotlib.pyplot as plt
+plt.rcParams['figure.figsize'] = [10, 6]
+
+img = plt.imread('arena.png')
+plt.imshow(img[:, ::3]) # compressed_2.png
+plt.show()
+print(type(img))
+```
+![compressed_2](img/compressed_2.png)
+*compressed_2.png*
+
+## Vecotized operations
+
+Applicare un'operazione matematica tra due vettori applica lo stesso operatore elemento per
+elemento. Questo è implementato in maniera estremamente efficiente.
+
+*Esempio*:
+```Python
+import numpy as np
+
+a = np.array([1.0, 2.3, 7, 2.999])
+b = np.array([3.2, 1.0, 1, 1.2])
+
+print(a + b)
+print(a * b)
+print(a / b)
+print(a ** b)
+print(a * 10)
+```
+*Output*:
+```
+[4.2   3.3   8.    4.199]
+[3.2    2.3    7.     3.5988]
+[0.3125     2.3        7.         2.49916667]
+[1.         2.3        7.         3.73569799]
+[10.   23.   70.   29.99]
+```
+
+Per lavorare con i vettori in modo efficiente è necessario usare i metodi messi a disposizione. Utilizzare
+dei cicli `for`, come si fa in altri linguaggi di programmazione (C, Java, ...) rende molto inefficiente le 
+operazioni.
+
+*Esempio*:
+*Data una matrice, si vuole il seno di tutti gli elmenti*
+```Python
+m = np.arange(25).reshape(5, 5)
+sin_m = np.sin(m)
+print(sin_m)
+```
+*Output*:
+```
+[[ 0.          0.84147098  0.90929743  0.14112001 -0.7568025 ]
+ [-0.95892427 -0.2794155   0.6569866   0.98935825  0.41211849]
+ [-0.54402111 -0.99999021 -0.53657292  0.42016704  0.99060736]
+ [ 0.65028784 -0.28790332 -0.96139749 -0.75098725  0.14987721]
+ [ 0.91294525  0.83665564 -0.00885131 -0.8462204  -0.90557836]]
+```
+
+In caso di numerosi set di dati, si potrebbe incorrere in operazioni illegali, ad esempio una divisione per
+zero. In questo caso l'operazione viene comunque completata, ma python lancia un warning, e nel risultato
+vengono messi dei valori, nel caso preso in esempio 'Inf' per indicare infinito.
+*Esempio*:
+```Python
+a = np.array([1.0, 2.3, 7, -2])
+b = np.array([3.2, 1.0, 0, 0.5]) # dividiamo per 0
+
+print(a / b)
+```
+*Output*:
+```
+<stdin>:1: RuntimeWarning: divide by zero encountered in true_divide
+[ 0.3125  2.3        inf -4.     ]
+```
+*Un altro caso che si può prendere in considerazione è quello in cui viene restituito NaN (Not a Number)*:
+```Python
+a = np.array([1.0, 3.2, 0, -2])
+c = np.array([3.2, 1.0, 0, 0.5])
+
+print(a / b)
+print(a ** b)
+```
+*Output*:
+```
+<stdin>:1: RuntimeWarning: invalid value encountered in true_divide
+[ 0.3125  3.2        nan -4.     ]
+<stdin>:1: RuntimeWarning: invalid value encountered in power
+[1.  3.2 1.  nan]
+```
+Nel caso in cui la dimensione dei due array non sia compatibile, non viene eseguita nessuna operazione, 
+ma viene lanciata un'eccezione:
+```Python
+a = np.array([1.0, 3.2, 0, -2])
+d = np.array([3.2, 1.0, 0]) # questo array ha un elemento in meno!
+print(a / d)
+```
+*Output*:
+```
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: operands could not be broadcast together with shapes (4,) (3,)
+```
+
+### Broadcasting
+
+È possibile applicare operazioni elemento-per-elemento anche in (alcuni) contesti in cui le
+dimensioni non combaciano. NumPy colma la differenza ripetendo il dato originale più volte.
+
+Questa operazione si chiama **broadcasting**.
+![broadcasting](img/broadc.png)
+
+*Esempio*:
+```Python
+a = np.arange(25).reshape(5, 5)
+b = np.array(10, 20, 30, 40, 50)
+print(a + b)
+```
+*Output*:
+```
+[[10 21 32 43 54]
+ [15 26 37 48 59]
+ [20 31 42 53 64]
+ [25 36 47 58 69]
+ [30 41 52 63 74]]
+```
+
+### Fancy indexing o Boolean indexing
+
+Esiste un metodo alternativo di usare gli indici, noto come **fancy indexing**.
+
+Usa degli array Booleani per selezionare solo gli elementi d'interesse. Si può creare usando
+operatori di confronto con l'array.
+
+*Esempio*:
+```Python
+a = np.array([-1, -3, 1, 4, -6, 9, 3])
+mask = a < 0
+print(a[mask])
+
+div3 = a % 3 == 0
+print(a[div3])
+
+print(a[a.nonzero()])
+```
+*Output*:
+```
+[-1 -3 -6]
+[-3 -6  9  3]i
+[-1 -3  1  4 -6  9  3]
+```
+Queste maschere possono essere usate, inserendole in liste all'interno degli indici per ottenere
+determinati valori.
+
+### Esercizio
+
+Considerando un'immagine applichiamo un algoritmo che la sfuoca.
+```Python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Utilizzando le operazioni vettoriali
+def smooth(img):
+    avg_img = (   img[1:-1, 1:-1] # center
+                + img[ :-2, 1:-1 ] # top
+                + img[2:  , 1:-1] # bottom
+                + img[1:-1,  :-2] # left
+                + img[1:-1, 2:  ] # right
+                ) / 5.0
+
+    return avg_img
+
+# Utilizzando cicli for innestati
+def smooth_loop(img):
+    smoothed = np.zeros((img.shape[0]-2, img.shape[1]-2))
+    for r in range(0, img.shape[0]-2):
+        for c in range(0, img.shape[1]-2):
+            smoothed[r, c] = (   img[r+1, c+1] # center
+                               + img[r  , c+1] # top
+                               + img[r+2, c+1] # bottom
+                               + img[r+1, c  ] # left
+                               + img[r+1, c+2] # right
+                               ) / 5.0
+
+    return smoothed
+
+img = plt.imread('arena_bw.png')
+plt.figure()
+# Set colormap so that images are pltted in gray scale.
+plt.gray()
+# Plot the original image first
+plt.subplot(1,2,1)
+plt.imshow(img)
+plt.title('original')
+
+avg_img = smooth(img)
+for num in range(50):
+    avg_img = smooth(avg_img)
+    
+# Now the filtered image.
+plt.subplot(1, 2, 2)
+plt.imshow(avg_img)
+plt.title('smoothed 50 times')
+
+assert np.allclose(smooth(img), smooth_loop(img))
+plt.show()
+
+```
+*Output*:
+![smooth](img/smooth.png)
+
+Utilizzare le operazioni vettorizzate migliora le prestazioni di circa 1000 volte 
+rispetto alla funzione con i cicli for innestati.
