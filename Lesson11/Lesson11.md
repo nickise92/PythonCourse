@@ -20,7 +20,7 @@ Molti siti web forniscono un file, robots.txt, che presenta permessi e limitazio
 di avvisare sempre il gestore del sito su cui si vuole fare scraping.
 
 *Esempio di robots.txt [univr](https://www.di.univr.it/robots.txt)*:
-![esempio1](esempio1.png)
+![esempio1](esempio1.PNG)
 
 ### Alcuni cenni di HTML
 HTML è un linguaggio di markup. Serve a strutturare documenti ipertestuali, in genere
@@ -48,7 +48,7 @@ tag. I tag sono racchiusi fra le parentesi angolari `<>`, e possono anche avere 
 </html>
 ```
 *Esempio:*
-![esempio2](esempio2.png)
+![esempio2](esempio2.PNG)
 
 ## Beautiful soup - Web scraping in python
 
