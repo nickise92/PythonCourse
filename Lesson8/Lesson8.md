@@ -369,7 +369,7 @@ print(type(img))
 ![compressed_2](img/compressed_2.png)
 *compressed_2.png*
 
-## Vecotized operations
+## Vectorized operations
 
 Applicare un'operazione matematica tra due vettori applica lo stesso operatore elemento per
 elemento. Questo è implementato in maniera estremamente efficiente.
